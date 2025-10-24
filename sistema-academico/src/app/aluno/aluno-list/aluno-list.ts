@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Aluno } from '../../model/aluno';
 import { AlunoService } from '../../service/aluno-service';
 import { CommonModule } from '@angular/common';
@@ -9,11 +9,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './aluno-list.html',
   styleUrl: './aluno-list.scss'
 })
-export class AlunoList {
-  alunos: Aluno[];
-  constructor(private alunoService:
-    AlunoService) {
-    this.alunos = this.alunoService.listar();
+export class AlunoList implements OnInit{
+  alunos: Aluno[] = [];
+
+  constructor(private alunoService: AlunoService){}
+
+  ngOnInit(): void {
+    this.alunoService.listar().subscribe({
+      next: (dados) => (this.alunos = dados),
+      error: () => alert('Deu erro ao carregar os alunos')
+    })
   }
+  
 
 }
