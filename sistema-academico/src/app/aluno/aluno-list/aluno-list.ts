@@ -15,8 +15,10 @@ export class AlunoList implements OnInit{
   constructor(private alunoService: AlunoService){}
 
   ngOnInit(): void {
-    this.alunoService.listar().subscribe({
-      next: (dados) => (this.alunos = dados),
+    this.alunoService.listar().subscribe(response => {
+      next: this.alunos = response.map(alunoData =>
+        Object.assign(new Aluno(alunoData.nome, alunoData.nota), alunoData)
+      );
       error: () => alert('Deu erro ao carregar os alunos')
     })
   }
