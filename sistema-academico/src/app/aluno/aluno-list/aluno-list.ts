@@ -2,26 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { Aluno } from '../../model/aluno';
 import { AlunoService } from '../../service/aluno-service';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-aluno-list',
-  imports: [CommonModule],
+  imports: [CommonModule, MatTableModule, MatButtonModule, RouterModule],
   templateUrl: './aluno-list.html',
   styleUrl: './aluno-list.scss'
 })
-export class AlunoList implements OnInit{
+export class AlunoList implements OnInit {
   alunos: Aluno[] = [];
-
-  constructor(private alunoService: AlunoService){}
-
+  displayedColumns = ['id', 'nome', 'nota', 'acoes'];
+  constructor(private service: AlunoService, private router: Router) { }
   ngOnInit(): void {
-    this.alunoService.listar().subscribe(response => {
-      next: this.alunos = response.map(alunoData =>
-        Object.assign(new Aluno(alunoData.nome, alunoData.nota), alunoData)
-      );
-      error: () => alert('Deu erro ao carregar os alunos')
-    })
+    this.service.listar().subscribe({
+      next: (dados) => (this.alunos = dados),
+      error: () => alert('Erro ao carregar alunos.'),
+    });
   }
-  
+  editar(aluno: Aluno) {
+    alert(`Editar aluno ${aluno.nome} (simulação)`);
+  }
+  remover(aluno: Aluno) {
+    alert(`Remover aluno ${aluno.nome} (simulação)`);
+    // Aqui você chamaria service.remover(aluno.id)
+  }
 
 }

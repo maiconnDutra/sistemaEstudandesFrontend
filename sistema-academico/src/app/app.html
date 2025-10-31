@@ -1,6 +1,7 @@
-<nav>
-    <button (click)="irParaLista()">Listar Alunos</button>
-    <button (click)="irParaNovo()">Novo Aluno</button>
-</nav>
-<hr>
+<mat-toolbar color="primary">
+    <span>Sistema Acadêmico</span>
+    <span class="spacer"></span>
+    <button mat-button (click)="irParaLista()">Listar Alunos</button>
+    <button mat-button (click)="irParaNovo()">Novo Aluno</button>
+</mat-toolbar>
 <router-outlet></router-outlet>
